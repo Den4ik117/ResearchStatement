@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Oswald'],
+                    },
+                }
+            }
+        }
+    </script>
+    <title>Исследование ведомости</title>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-blue-400">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl uppercase py-4 select-none text-blue-900 hidden sm:block">Denis Zagvozdin</div>
+                <div class="text-xl uppercase py-4 select-none text-blue-900 block sm:hidden">Denis Z.</div>
+                <ul class="flex gap-4 items-center">
+                    <li><a class="hover:bg-blue-500 rounded py-2 px-3 text-sm sm:text-lg text-blue-900" href="https://vk.com/denchik1170">ВКонтакте</a></li>
+                    <li><a class="hover:bg-blue-500 rounded py-2 px-3 text-sm sm:text-lg text-blue-900" href="https://t.me/denchik1170">Telegram</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main class="container mx-auto px-4 py-6 text-gray-900">
+        <h1 class="text-2xl lg:text-4xl">Исследование ведомости от {{ date }}</h1>
+        <p class="mt-4 text-base lg:text-lg text-justify">
+            <strong>Важная преамбула.</strong>
+            Исследование проводилось исключительно в образовательных целях.
+            И для этого был использована «Ведомость ТП» Уральского Федерального Университета.
+            Никого не призываю злоупотреблять информацией, которая есть в открытом доступе и здесь.
+        </p>
+
+        <h2 class="mt-6 text-xl lg:text-2xl">Топ 10 людей с самыми высокими баллами в ведомости</h2>
+        <div class="max-w-full overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="mt-4 w-full text-sm lg:text-base">
+                    <thead>
+                    <tr>
+                        <th class="border border-gray-900 px-2 py-1 whitespace-nowrap">ID</th>
+                        <th class="border border-gray-900 px-2 py-1 whitespace-nowrap">ФИО</th>
+                        <th class="border border-gray-900 px-2 py-1 whitespace-nowrap">Почта</th>
+                        <th class="border border-gray-900 px-2 py-1 whitespace-nowrap">Количество баллов</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users1 %}
+                    <tr class="text-center">
+                        <td class="border border-gray-900 px-2 py-1 whitespace-nowrap">{{ user.id }}</td>
+                        <td class="border border-gray-900 px-2 py-1 whitespace-nowrap">{{ user.full_name }}</td>
+                        <td class="border border-gray-900 px-2 py-1 whitespace-nowrap select-all">{{ user.email }}</td>
+                        <td class="border border-gray-900 px-2 py-1 whitespace-nowrap">{{ user.total }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h2 class="mt-6 text-xl lg:text-2xl">Люди, у которых проблемы с контестом или Elearn'ом</h2>
+        <div class="max-w-full overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="mt-4 w-full text-sm lg:text-base">
+                    <thead>
+                    <tr>
+                        <th class="border border-gray-900 px-2 py-1 whitespace-nowrap">ID</th>
+                        <th class="border border-gray-900 px-2 py-1 whitespace-nowrap">ФИО</th>
+                        <th class="border border-gray-900 px-2 py-1 whitespace-nowrap">Почта</th>
+                        <th class="border border-gray-900 px-2 py-1 whitespace-nowrap">Контест</th>
+                        <th class="border border-gray-900 px-2 py-1 whitespace-nowrap">Elearn</th>
+                        <th class="border border-gray-900 px-2 py-1 whitespace-nowrap">Количество баллов</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users2 %}
+                    <tr class="text-center">
+                        <td class="border border-gray-900 px-2 py-1 whitespace-nowrap">{{ user.id }}</td>
+                        <td class="border border-gray-900 px-2 py-1 whitespace-nowrap">{{ user.full_name }}</td>
+                        <td class="border border-gray-900 px-2 py-1 whitespace-nowrap select-all">{{ user.email }}</td>
+                        <td class="border border-gray-900 px-2 py-1 whitespace-nowrap">
+                            {% if user.contest %}
+                            <span class="text-xs uppercase rounded-full bg-green-300 text-green-600 px-2 py-1 my-1 inline-block">Подключён</span>
+                            {% else %}
+                            <span class="text-xs uppercase rounded-full bg-red-300 text-red-600 px-2 py-1 my-1 my-1 inline-block">Не подключён</span>
+                            {% endif %}
+                        </td>
+                        <td class="border border-gray-900 px-2 py-1 whitespace-nowrap">
+                            {% if user.elearn %}
+                            <span class="text-xs uppercase rounded-full bg-green-300 text-green-600 px-2 py-1 my-1 inline-block">Подключён</span>
+                            {% else %}
+                            <span class="text-xs uppercase rounded-full bg-red-300 text-red-600 px-2 py-1 my-1 my-1 inline-block">Не подключён</span>
+                            {% endif %}
+                        </td>
+                        <td class="border border-gray-900 px-2 py-1 whitespace-nowrap">{{ user.total }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

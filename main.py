@@ -1,13 +1,22 @@
 from research.users import Users
-from var_dump import var_dump
+from jinja2 import Environment, FileSystemLoader
+from research.writer import write
+from datetime import datetime
 
 
 if __name__ == '__main__':
     filename = 'data/statement.csv'
-    users = Users.import_from_csv(filename)
-    filtered_users = users.filter(lambda user: not user.elearn)
+    template_folder = 'templates'
+    template = 'report_template.html'
 
-    for user in filtered_users:
-        print('{0:.<40} | Итог: {1:>2} |'.format(user.full_name, user.total))
-    print('-' * 53)
-    print('Всего пользователей найдено: {0}'.format(len(filtered_users)))
+    users = Users.import_from_csv(filename)
+
+    env = Environment(loader=FileSystemLoader(template_folder))
+    template = env.get_template(template)
+    html_template = template.render({
+        'date': datetime.today().strftime('%d.%m.%Y'),
+        'users1': users.filter(lambda user: user.elearn and user.contest).sort(lambda user: user.total, True).get(10),
+        'users2': users.filter(lambda user: not(user.elearn and user.contest)).sort(lambda user: user.total, True),
+    })
+
+    write('templates/report.html', html_template)

@@ -31,3 +31,6 @@ class Users:
 
     def __len__(self):
         return len(self._users)
+
+    def get(self, count):
+        return Users(self._users[:count])
