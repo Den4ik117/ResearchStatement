@@ -1,16 +1,13 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from research.users import Users
+from var_dump import var_dump
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    filename = 'data/statement.csv'
+    users = Users.import_from_csv(filename)
+    filtered_users = users.filter(lambda user: not user.elearn)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    for user in filtered_users:
+        print('{0:.<40} | Итог: {1:>2} |'.format(user.full_name, user.total))
+    print('-' * 53)
+    print('Всего пользователей найдено: {0}'.format(len(filtered_users)))
