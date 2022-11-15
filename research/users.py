@@ -19,8 +19,7 @@ class Users:
         self._users.append(user)
 
     def sort(self, function, reverse=False):
-        self._users.sort(key=function, reverse=reverse)
-        return self
+        return Users(list(sorted(self._users, key=function, reverse=reverse)))
 
     def filter(self, function):
         return Users(list(filter(function, self._users)))
@@ -40,6 +39,13 @@ class Users:
         for user in self._users:
             group_users[getattr(user, key)] = user
         return group_users
+    
+    def contribution_by_keys(self, *keys) -> dict[str, int]:
+        counter = {key: [] for key in keys}
+        for user in self._users:
+            for key in keys:
+                counter[key].append(getattr(user, key))
+        return {key: sum(values) / len(values) for key, values in counter.items()}
 
 
 class GroupUsers:
