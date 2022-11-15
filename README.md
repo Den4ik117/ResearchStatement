@@ -1,4 +1,6 @@
-## Research Statement ― исследование ведомости УрФУ с помощью Python
+## Исследование ведомости УрФУ с помощью Python
+
+[Ссылка на статью](https://telegra.ph/YA-izuchal-Python-2-mesyaca-chtoby-napisat-ehtu-statyu-11-15)
 
 Проект выполнен исключительно с целью научиться программировать на Python.
 
